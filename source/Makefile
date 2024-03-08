@@ -4,7 +4,7 @@
 
 ## General Flags
 PROJECT = RetroAdapterV2
-MCU = atmega8
+MCU = atmega32
 TARGET = RetroAdapterV2.elf
 CC = avr-gcc
 
@@ -41,11 +41,11 @@ LDFLAGS += -Wl,--relax
 
 
 AVRDUDE = avrdude
-AVRDUDE_PARAMS = -c usbasp
+AVRDUDE_PARAMS = -c arduino -P COM9 -b 19200
 AVRDUDE_PARAMS += -p $(MCU)
 
 # Please look at "fuses.md" for understanding this:
-AVRDUDE_PARAMS_FUSE = -U hfuse:w:0xC1:m -U lfuse:w:0x9F:m
+AVRDUDE_PARAMS_FUSE = -U lfuse:w:0x9F:m 	-U hfuse:w:0xC1:m 	-U lock:w:0xFF:m 
 
 
 ## Intel Hex file production flags
@@ -60,7 +60,7 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 OBJECTS = usbdrvasm.o usbdrv.o 
 
 ## Build
-all: $(TARGET) RetroAdapterV2.hex RetroAdapterV2.eep RetroAdapterV2.lss size
+all: $(TARGET) RetroAdapterV2.hex RetroAdapterV2.eep RetroAdapterV2.lss
 
 ## Compile
 usbdrvasm.o: usbdrv/usbdrvasm.S

@@ -40,8 +40,8 @@ void Read2ndDirect(report_t *reportBuffer)
 	if ((PINB & 0b00001100) == 0)		// if L/R low then Megadrive pad detected
 	{
 		megadrive = 1;
-		if (!(PINB & (1<<1))) reportBuffer->b1 |= (1<<0);	// Megadrive A
-		if (!(PINC & (1<<1))) reportBuffer->b1 |= (1<<6);	// Megadrive Start
+		if (!(PINB & (1<<1))) reportBuffer->b1 |= (1<<3);	// Megadrive A
+		if (!(PINC & (1<<1))) reportBuffer->b2 |= (1<<1);	// Megadrive Start
 	}
 
 	PORTC	|= (1<<2);					// Select high for Megadrive
@@ -60,8 +60,8 @@ void Read2ndDirect(report_t *reportBuffer)
 	}
 	else
 	{
-		if (!(PINB & (1<<1))) reportBuffer->b1 |= (1<<1);	// Fire 1 / Megadrive B
-		if (!(PINC & (1<<1))) reportBuffer->b1 |= (1<<2);	// Fire 2 / Megadrive C
+		if (!(PINB & (1<<1))) reportBuffer->b1 |= (1<<2);	// Fire 1 / Megadrive B
+		if (!(PINC & (1<<1))) reportBuffer->b1 |= (1<<1);	// Fire 2 / Megadrive C
 				
 		// Megadrive six button controller detection //
 
@@ -78,10 +78,10 @@ void Read2ndDirect(report_t *reportBuffer)
 			PORTC	|= (1<<2);					// select high
 			_delay_us(14);
 
-			if (!(PINB & (1<<5))) reportBuffer->b1 |= (1<<5);	// Z
-			if (!(PINB & (1<<4))) reportBuffer->b1 |= (1<<4);	// Y
-			if (!(PINB & (1<<3))) reportBuffer->b1 |= (1<<3);	// X
-			if (!(PINB & (1<<2))) reportBuffer->b1 |= (1<<7);	// Mode
+			if (!(PINB & (1<<5))) reportBuffer->b1 |= (1<<7);	// Z
+			if (!(PINB & (1<<4))) reportBuffer->b1 |= (1<<5);	// Y
+			if (!(PINB & (1<<3))) reportBuffer->b1 |= (1<<0);	// X
+			if (!(PINB & (1<<2))) reportBuffer->b2 |= (1<<0);	// Mode
 		}
 	}
 }
